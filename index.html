@@ -2,26 +2,92 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Cat & Mouse Maze Game</title>
   <style>
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
     body {
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
       margin: 0;
+      padding: 10px;
       background-color: #111;
       position: relative;
+      overflow: hidden;
+    }
+    #game-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 100%;
     }
     canvas {
       border: 2px solid #444;
       image-rendering: pixelated;
+      max-width: 100%;
+      height: auto;
+    }
+    #mobile-controls {
+      display: none;
+      margin-top: 15px;
+      user-select: none;
+    }
+    .control-row {
+      display: flex;
+      justify-content: center;
+      gap: 5px;
+    }
+    .control-btn {
+      width: 60px;
+      height: 60px;
+      font-size: 28px;
+      background: #8B4513;
+      border: 3px solid #A0522D;
+      border-radius: 10px;
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      touch-action: manipulation;
+    }
+    .control-btn:active {
+      background: #6B3510;
+      transform: scale(0.95);
+    }
+    .spacer {
+      width: 60px;
+      height: 60px;
+    }
+    @media (max-width: 960px), (hover: none) {
+      #mobile-controls {
+        display: block;
+      }
     }
   </style>
 </head>
 <body>
-  <canvas id="game" width="960" height="720"></canvas>
+  <div id="game-container">
+    <canvas id="game" width="960" height="720"></canvas>
+    <div id="mobile-controls">
+      <div class="control-row">
+        <div class="spacer"></div>
+        <button class="control-btn" id="btn-up">▲</button>
+        <div class="spacer"></div>
+      </div>
+      <div class="control-row">
+        <button class="control-btn" id="btn-left">◀</button>
+        <button class="control-btn" id="btn-down">▼</button>
+        <button class="control-btn" id="btn-right">▶</button>
+      </div>
+    </div>
+  </div>
   <script src="script.js"></script>
 </body>
 </html>

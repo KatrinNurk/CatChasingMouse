@@ -725,3 +725,33 @@ restartButton.style.cursor = 'pointer';
 document.body.appendChild(restartButton);
 
 restartButton.addEventListener('click', restart);
+
+// Mobile touch controls
+function setupMobileControls() {
+  const btnUp = document.getElementById('btn-up');
+  const btnDown = document.getElementById('btn-down');
+  const btnLeft = document.getElementById('btn-left');
+  const btnRight = document.getElementById('btn-right');
+
+  if (!btnUp) return; // Controls not in DOM
+
+  // Helper to simulate key press
+  function simulateKey(key) {
+    const event = new KeyboardEvent('keydown', { key: key });
+    document.dispatchEvent(event);
+  }
+
+  // Touch events (better for mobile)
+  btnUp.addEventListener('touchstart', (e) => { e.preventDefault(); simulateKey('ArrowUp'); });
+  btnDown.addEventListener('touchstart', (e) => { e.preventDefault(); simulateKey('ArrowDown'); });
+  btnLeft.addEventListener('touchstart', (e) => { e.preventDefault(); simulateKey('ArrowLeft'); });
+  btnRight.addEventListener('touchstart', (e) => { e.preventDefault(); simulateKey('ArrowRight'); });
+
+  // Also support mouse clicks for testing on desktop
+  btnUp.addEventListener('click', () => simulateKey('ArrowUp'));
+  btnDown.addEventListener('click', () => simulateKey('ArrowDown'));
+  btnLeft.addEventListener('click', () => simulateKey('ArrowLeft'));
+  btnRight.addEventListener('click', () => simulateKey('ArrowRight'));
+}
+
+setupMobileControls();
