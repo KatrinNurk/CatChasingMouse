@@ -735,23 +735,24 @@ function setupMobileControls() {
 
   if (!btnUp) return; // Controls not in DOM
 
-  // Helper to simulate key press
-  function simulateKey(key) {
-    const event = new KeyboardEvent('keydown', { key: key });
-    document.dispatchEvent(event);
+  // Directly add/remove from keys Set
+  function pressKey(key) {
+    keys.add(key);
+    // Auto-release after a short delay for tap behavior
+    setTimeout(() => keys.delete(key), 150);
   }
 
-  // Touch events (better for mobile)
-  btnUp.addEventListener('touchstart', (e) => { e.preventDefault(); simulateKey('ArrowUp'); });
-  btnDown.addEventListener('touchstart', (e) => { e.preventDefault(); simulateKey('ArrowDown'); });
-  btnLeft.addEventListener('touchstart', (e) => { e.preventDefault(); simulateKey('ArrowLeft'); });
-  btnRight.addEventListener('touchstart', (e) => { e.preventDefault(); simulateKey('ArrowRight'); });
+  // Touch events (for mobile)
+  btnUp.addEventListener('touchstart', (e) => { e.preventDefault(); pressKey('ArrowUp'); });
+  btnDown.addEventListener('touchstart', (e) => { e.preventDefault(); pressKey('ArrowDown'); });
+  btnLeft.addEventListener('touchstart', (e) => { e.preventDefault(); pressKey('ArrowLeft'); });
+  btnRight.addEventListener('touchstart', (e) => { e.preventDefault(); pressKey('ArrowRight'); });
 
-  // Also support mouse clicks for testing on desktop
-  btnUp.addEventListener('click', () => simulateKey('ArrowUp'));
-  btnDown.addEventListener('click', () => simulateKey('ArrowDown'));
-  btnLeft.addEventListener('click', () => simulateKey('ArrowLeft'));
-  btnRight.addEventListener('click', () => simulateKey('ArrowRight'));
+  // Mouse clicks (for desktop testing)
+  btnUp.addEventListener('mousedown', (e) => { e.preventDefault(); pressKey('ArrowUp'); });
+  btnDown.addEventListener('mousedown', (e) => { e.preventDefault(); pressKey('ArrowDown'); });
+  btnLeft.addEventListener('mousedown', (e) => { e.preventDefault(); pressKey('ArrowLeft'); });
+  btnRight.addEventListener('mousedown', (e) => { e.preventDefault(); pressKey('ArrowRight'); });
 }
 
 setupMobileControls();
